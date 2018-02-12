@@ -93,10 +93,19 @@ final class Addok extends AbstractHttpProvider implements Provider
         $results = [];
         foreach ($json->features as $feature) {
             $coordinates = $feature->geometry->coordinates;
-            $streetName = !empty($feature->properties->street) ? $feature->properties->street : null;
-            $number = !empty($feature->properties->housenumber) ? $feature->properties->housenumber : null;
-            $municipality = !empty($feature->properties->city) ? $feature->properties->city : null;
-            $postCode = !empty($feature->properties->postCode) ? $feature->properties->postCode : null;
+
+            switch ($feature->properties->type) {
+                case 'housenumber':
+                    $streetName = !empty($feature->properties->street) ? $feature->properties->street : null;
+                    $number = !empty($feature->properties->housenumber) ? $feature->properties->housenumber : null;
+                    break;
+                case 'street':
+                    $streetName = !empty($feature->properties->name) ? $feature->properties->name : null;
+                    $number = null;
+                    break;
+            }
+            $locality = !empty($feature->properties->city) ? $feature->properties->city : null;
+            $postalCode = !empty($feature->properties->postcode) ? $feature->properties->postcode : null;
 
             $results[] = Address::createFromArray([
                 'providedBy'   => $this->getName(),
@@ -104,8 +113,8 @@ final class Addok extends AbstractHttpProvider implements Provider
                 'longitude'    => $coordinates[0],
                 'streetNumber' => $number,
                 'streetName'   => $streetName,
-                'locality'     => $municipality,
-                'postalCode'   => $postCode,
+                'locality'     => $locality,
+                'postalCode'   => $postalCode,
             ]);
         }
 
