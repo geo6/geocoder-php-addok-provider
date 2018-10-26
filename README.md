@@ -1,5 +1,6 @@
 # :fr: [Geocoder PHP](https://github.com/geocoder-php/Geocoder) "Addok" provider
 
+[![Build Status](https://travis-ci.org/geo6/geocoder-php-addok-provider.svg?branch=master)](https://travis-ci.org/geo6/geocoder-php-addok-provider)
 [![Latest Stable Version](https://poser.pugx.org/geo6/geocoder-php-addok-provider/v/stable)](https://packagist.org/packages/geo6/geocoder-php-addok-provider)
 [![Total Downloads](https://poser.pugx.org/geo6/geocoder-php-addok-provider/downloads)](https://packagist.org/packages/geo6/geocoder-php-addok-provider)
 [![Monthly Downloads](https://poser.pugx.org/geo6/geocoder-php-addok-provider/d/monthly.png)](https://packagist.org/packages/geo6/geocoder-php-addok-provider)
