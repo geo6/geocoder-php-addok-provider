@@ -13,7 +13,8 @@ This is the "Addok" provider for the [Geocoder PHP](https://github.com/geocoder-
 **Coverage:** France  
 **API:** <https://adresse.data.gouv.fr/api>
 
-This provider can be used with any [Addok](https://github.com/addok/addok) server. This provider provides [BAN (*Base Adresse Nationale*)](https://adresse.data.gouv.fr/) with the function `Addok::withBANServer()`.
+This provider can be used with any [Addok](https://github.com/addok/addok) server.  
+This provider provides [BAN (*Base Adresse Nationale*)](https://adresse.data.gouv.fr/) with the function `Addok::withBANServer()`.
 
 ## Install
 
