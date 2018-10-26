@@ -142,7 +142,7 @@ final class Addok extends AbstractHttpProvider implements Provider
             $streetName = !empty($feature->properties->street) ? $feature->properties->street : null;
             $number = !empty($feature->properties->housenumber) ? $feature->properties->housenumber : null;
             $municipality = !empty($feature->properties->city) ? $feature->properties->city : null;
-            $postCode = !empty($feature->properties->postCode) ? $feature->properties->postCode : null;
+            $postalCode = !empty($feature->properties->postcode) ? $feature->properties->postcode : null;
 
             $results[] = Address::createFromArray([
                 'providedBy'   => $this->getName(),
@@ -151,7 +151,7 @@ final class Addok extends AbstractHttpProvider implements Provider
                 'streetNumber' => $number,
                 'streetName'   => $streetName,
                 'locality'     => $municipality,
-                'postalCode'   => $postCode,
+                'postalCode'   => $postalCode,
             ]);
         }
 
