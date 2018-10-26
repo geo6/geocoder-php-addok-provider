@@ -25,9 +25,9 @@ class IntegrationTest extends ProviderIntegrationTest
     protected $testIpv6 = false;
 
     protected $skippedTests = [
-        'testGeocodeQuery' => 'BAN Server supports France only.',
-        'testReverseQuery' => 'BAN Server supports France only.',
-        'testReverseQueryWithNoResults' => 'Addok returns "debug" information for reverse geocoding on coordinates 0, 0. See https://github.com/addok/addok/issues/505'
+        'testGeocodeQuery'              => 'BAN Server supports France only.',
+        'testReverseQuery'              => 'BAN Server supports France only.',
+        'testReverseQueryWithNoResults' => 'Addok returns "debug" information for reverse geocoding on coordinates 0, 0. See https://github.com/addok/addok/issues/505',
     ];
 
     protected function createProvider(HttpClient $httpClient)
