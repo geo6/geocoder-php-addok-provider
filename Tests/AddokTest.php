@@ -89,4 +89,22 @@ class AddokTest extends BaseTestCase
         $this->assertEquals('95000', $result->getPostalCode());
         $this->assertEquals('Cergy', $result->getLocality());
     }
+
+    public function testGeocodeOnlyCityQuery()
+    {
+        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Meaux'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.95732, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(2.902793, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals('77100', $result->getPostalCode());
+        $this->assertEquals('Meaux', $result->getLocality());
+    }
 }
