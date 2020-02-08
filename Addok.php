@@ -103,6 +103,9 @@ final class Addok extends AbstractHttpProvider implements Provider
                     $streetName = !empty($feature->properties->name) ? $feature->properties->name : null;
                     $number = null;
                     break;
+                default:
+                    $streetName = null;
+                    $number = null;
             }
             $locality = !empty($feature->properties->city) ? $feature->properties->city : null;
             $postalCode = !empty($feature->properties->postcode) ? $feature->properties->postcode : null;
