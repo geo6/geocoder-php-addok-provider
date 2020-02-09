@@ -107,4 +107,60 @@ class AddokTest extends BaseTestCase
         $this->assertEquals('77100', $result->getPostalCode());
         $this->assertEquals('Meaux', $result->getLocality());
     }
+
+    public function testGeocodeHouseNumberTypeQuery()
+    {
+        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $results = $provider->geocodeQuery(
+            GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_HOUSENUMBER)
+        );
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('20', $result->getStreetNumber());
+        $this->assertEquals('Avenue Kléber', $result->getStreetName());
+        $this->assertEquals('75016', $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+    }
+
+    public function testGeocodeStreetTypeQuery()
+    {
+        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $results = $provider->geocodeQuery(
+            GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_STREET)
+        );
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Avenue Kléber', $result->getStreetName());
+        $this->assertEquals('75016', $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+    }
+
+    public function testGeocodeLocalityQuery()
+    {
+        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $results = $provider->geocodeQuery(
+            GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_LOCALITY)
+       );
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(48.871759, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(2.294253, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals('75016', $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+    }
 }

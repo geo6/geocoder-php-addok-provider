@@ -29,6 +29,11 @@ use Http\Client\HttpClient;
  */
 final class Addok extends AbstractHttpProvider implements Provider
 {
+    const TYPE_HOUSENUMBER = 'housenumber';
+    const TYPE_STREET = 'street';
+    const TYPE_LOCALITY = 'locality';
+    const TYPE_MUNICIPALITY = 'municipality';
+
     /**
      * @var string
      */
@@ -83,6 +88,11 @@ final class Addok extends AbstractHttpProvider implements Provider
         }
 
         $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
+
+        if ($type = $query->getData('type', null)) {
+            $url .= sprintf('&type=%s', $type);
+        }
+
         $json = $this->executeQuery($url);
 
         // no result
@@ -95,11 +105,11 @@ final class Addok extends AbstractHttpProvider implements Provider
             $coordinates = $feature->geometry->coordinates;
 
             switch ($feature->properties->type) {
-                case 'housenumber':
+                case self::TYPE_HOUSENUMBER:
                     $streetName = !empty($feature->properties->street) ? $feature->properties->street : null;
                     $number = !empty($feature->properties->housenumber) ? $feature->properties->housenumber : null;
                     break;
-                case 'street':
+                case self::TYPE_STREET:
                     $streetName = !empty($feature->properties->name) ? $feature->properties->name : null;
                     $number = null;
                     break;
