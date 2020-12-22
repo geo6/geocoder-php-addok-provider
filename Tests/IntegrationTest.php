@@ -32,7 +32,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return Addok::withBANServer($httpClient, 'Geocoder PHP/Addok Provider/Integration Test');
+        return Addok::withBANServer($httpClient);
     }
 
     protected function getCacheDir()

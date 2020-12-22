@@ -24,39 +24,36 @@ class AddokTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Addok provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = Addok::withBANServer($this->getMockedHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Addok provider does not support IP addresses, only street addresses.');
+
+        $provider = Addok::withBANServer($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Addok provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = Addok::withBANServer($this->getMockedHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Addok provider does not support IP addresses, only street addresses.');
+
+        $provider = Addok::withBANServer($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Addok provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
-        $provider = Addok::withBANServer($this->getMockedHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Addok provider does not support IP addresses, only street addresses.');
+
+        $provider = Addok::withBANServer($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
     public function testReverseQuery()
     {
-        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.031407, 2.060204));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -73,7 +70,7 @@ class AddokTest extends BaseTestCase
 
     public function testGeocodeQuery()
     {
-        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('6 quai de la tourelle cergy'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -82,8 +79,8 @@ class AddokTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(49.031407, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(2.060204, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(49.031407, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.060204, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('6', $result->getStreetNumber());
         $this->assertEquals('Quai de la Tourelle', $result->getStreetName());
         $this->assertEquals('95000', $result->getPostalCode());
@@ -92,7 +89,7 @@ class AddokTest extends BaseTestCase
 
     public function testGeocodeOnlyCityQuery()
     {
-        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Meaux'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -100,8 +97,8 @@ class AddokTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.95732, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(2.902793, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(48.95732, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.902793, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals('77100', $result->getPostalCode());
@@ -110,7 +107,7 @@ class AddokTest extends BaseTestCase
 
     public function testGeocodeHouseNumberTypeQuery()
     {
-        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->geocodeQuery(
             GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_HOUSENUMBER)
         );
@@ -128,7 +125,7 @@ class AddokTest extends BaseTestCase
 
     public function testGeocodeStreetTypeQuery()
     {
-        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->geocodeQuery(
             GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_STREET)
         );
@@ -146,7 +143,7 @@ class AddokTest extends BaseTestCase
 
     public function testGeocodeLocalityQuery()
     {
-        $provider = Addok::withBANServer($this->getHttpClient(), 'Geocoder PHP/Addok Provider/Addok Test');
+        $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->geocodeQuery(
             GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_LOCALITY)
        );
@@ -158,8 +155,8 @@ class AddokTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
-        $this->assertEquals(48.871759, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(2.294253, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(48.871759, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.294253, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('75016', $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
     }
