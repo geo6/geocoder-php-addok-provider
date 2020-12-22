@@ -146,7 +146,7 @@ class AddokTest extends BaseTestCase
         $provider = Addok::withBANServer($this->getHttpClient());
         $results = $provider->geocodeQuery(
             GeocodeQuery::create('20 avenue Kléber, Paris')->withData('type', Addok::TYPE_LOCALITY)
-       );
+        );
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
 
