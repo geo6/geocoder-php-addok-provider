@@ -12,7 +12,7 @@ namespace Geocoder\Provider\Addok\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\Addok\Addok;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 class IntegrationTest extends ProviderIntegrationTest
 {
@@ -30,7 +30,7 @@ class IntegrationTest extends ProviderIntegrationTest
         'testReverseQueryWithNoResults' => 'Addok returns "debug" information for reverse geocoding on coordinates 0, 0. See https://github.com/addok/addok/issues/505',
     ];
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return Addok::withBANServer($httpClient);
     }

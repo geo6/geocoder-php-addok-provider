@@ -22,7 +22,7 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Jonathan Beliën <jbe@geo6.be>
@@ -40,21 +40,21 @@ final class Addok extends AbstractHttpProvider implements Provider
     private $rootUrl;
 
     /**
-     * @param HttpClient  $client
-     * @param string|null $locale
+     * @param ClientInterface $client
+     * @param string|null     $locale
      *
      * @return Addok
      */
-    public static function withBANServer(HttpClient $client)
+    public static function withBANServer(ClientInterface $client)
     {
         return new self($client, 'https://api-adresse.data.gouv.fr');
     }
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $rootUrl Root URL of the addok server
+     * @param ClientInterface $client  an HTTP adapter
+     * @param string          $rootUrl Root URL of the addok server
      */
-    public function __construct(HttpClient $client, $rootUrl)
+    public function __construct(ClientInterface $client, $rootUrl)
     {
         parent::__construct($client);
 
