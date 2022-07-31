@@ -40,8 +40,8 @@ final class Addok extends AbstractHttpProvider implements Provider
     private $rootUrl;
 
     /**
-     * @param ClientInterface  $client
-     * @param string|null $locale
+     * @param ClientInterface $client
+     * @param string|null     $locale
      *
      * @return Addok
      */
@@ -52,7 +52,7 @@ final class Addok extends AbstractHttpProvider implements Provider
 
     /**
      * @param ClientInterface $client  an HTTP adapter
-     * @param string     $rootUrl Root URL of the addok server
+     * @param string          $rootUrl Root URL of the addok server
      */
     public function __construct(ClientInterface $client, $rootUrl)
     {
