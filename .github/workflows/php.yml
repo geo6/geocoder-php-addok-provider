@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0', '8.1']
+        php-version: ['8.0', '8.1', '8.2', '8.3', '8.4']
     steps:
     - uses: actions/checkout@v4
     - name: Use PHP ${{ matrix.php-version }}
@@ -28,8 +28,3 @@ jobs:
       run: composer install --no-progress
     - name: Run test suite
       run: composer run-script test-ci
-    - name: Send code coverage to Scrutinizer
-      if: ${{ matrix.php-version == '7.4' }}
-      run: |
-        wget -q https://scrutinizer-ci.com/ocular.phar
-        php ocular.phar code-coverage:upload --format=php-clover coverage.clover

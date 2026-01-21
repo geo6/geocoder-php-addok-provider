@@ -11,9 +11,9 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
-        "geocoder-php/common-http": "^4.0",
-        "willdurand/geocoder": "^4.0"
+        "php": "^8.0",
+        "geocoder-php/common-http": "^4.1",
+        "willdurand/geocoder": "^4.0|^5.0"
     },
     "provide": {
         "geocoder-php/provider-implementation": "1.0"
@@ -37,5 +37,10 @@
     "scripts": {
         "test": "phpunit",
         "test-ci": "phpunit --coverage-text --coverage-clover=coverage.clover"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
     }
 }

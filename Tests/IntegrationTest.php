@@ -16,15 +16,15 @@ use Psr\Http\Client\ClientInterface;
 
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testAddress = true;
+    protected bool $testAddress = true;
 
-    protected $testReverse = true;
+    protected bool $testReverse = true;
 
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
-    protected $skippedTests = [
+    protected array $skippedTests = [
         'testGeocodeQuery'              => 'BAN Server supports France only.',
         'testReverseQuery'              => 'BAN Server supports France only.',
         'testReverseQueryWithNoResults' => 'Addok returns "debug" information for reverse geocoding on coordinates 0, 0. See https://github.com/addok/addok/issues/505',
@@ -35,12 +35,13 @@ class IntegrationTest extends ProviderIntegrationTest
         return Addok::withBANServer($httpClient);
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
+        return '';
     }
 }
