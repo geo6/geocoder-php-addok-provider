@@ -154,9 +154,9 @@ class AddokTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
-        $this->assertEqualsWithDelta(48.871176, $result->getCoordinates()->getLatitude(), 0.00001);
-        $this->assertEqualsWithDelta(2.292863, $result->getCoordinates()->getLongitude(), 0.00001);
-        $this->assertEquals('75016', $result->getPostalCode());
-        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEqualsWithDelta(43.631962, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(1.380094, $result->getCoordinates()->getLongitude(), 0.00001);
+        $this->assertEquals('31700', $result->getPostalCode());
+        $this->assertEquals('Blagnac', $result->getLocality());
     }
 }
