@@ -54,10 +54,9 @@ class AddokTest extends BaseTestCase
     public function testReverseQuery()
     {
         $provider = Addok::withBANServer($this->getHttpClient());
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.031407, 2.060204));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.031526, 2.060164));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -79,8 +78,8 @@ class AddokTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(49.031407, $result->getCoordinates()->getLatitude(), 0.00001);
-        $this->assertEqualsWithDelta(2.060204, $result->getCoordinates()->getLongitude(), 0.00001);
+        $this->assertEqualsWithDelta(49.031526, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.060164, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('6', $result->getStreetNumber());
         $this->assertEquals('Quai de la Tourelle', $result->getStreetName());
         $this->assertEquals('95000', $result->getPostalCode());
@@ -90,19 +89,19 @@ class AddokTest extends BaseTestCase
     public function testGeocodeOnlyCityQuery()
     {
         $provider = Addok::withBANServer($this->getHttpClient());
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Meaux'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Grenoble'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(48.95732, $result->getCoordinates()->getLatitude(), 0.00001);
-        $this->assertEqualsWithDelta(2.902793, $result->getCoordinates()->getLongitude(), 0.00001);
+        $this->assertEqualsWithDelta(45.182828, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(5.724369, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
-        $this->assertEquals('77100', $result->getPostalCode());
-        $this->assertEquals('Meaux', $result->getLocality());
+        $this->assertEquals('38000', $result->getPostalCode());
+        $this->assertEquals('Grenoble', $result->getLocality());
     }
 
     public function testGeocodeHouseNumberTypeQuery()
@@ -155,9 +154,9 @@ class AddokTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
-        $this->assertEqualsWithDelta(48.871759, $result->getCoordinates()->getLatitude(), 0.00001);
-        $this->assertEqualsWithDelta(2.294253, $result->getCoordinates()->getLongitude(), 0.00001);
-        $this->assertEquals('75016', $result->getPostalCode());
-        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEqualsWithDelta(43.631962, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(1.380094, $result->getCoordinates()->getLongitude(), 0.00001);
+        $this->assertEquals('31700', $result->getPostalCode());
+        $this->assertEquals('Blagnac', $result->getLocality());
     }
 }

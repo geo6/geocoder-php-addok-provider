@@ -47,7 +47,7 @@ final class Addok extends AbstractHttpProvider implements Provider
      */
     public static function withBANServer(ClientInterface $client)
     {
-        return new self($client, 'https://api-adresse.data.gouv.fr');
+        return new self($client, 'https://data.geopf.fr/geocodage');
     }
 
     /**
