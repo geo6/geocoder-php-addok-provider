@@ -128,6 +128,7 @@ final class Addok extends AbstractHttpProvider implements Provider
                 'streetName'   => $streetName,
                 'locality'     => $locality,
                 'postalCode'   => $postalCode,
+                'adminLevels'  => $this->getAdminLevels($feature->properties),
             ]);
         }
 
@@ -165,6 +166,7 @@ final class Addok extends AbstractHttpProvider implements Provider
                 'streetName'   => $streetName,
                 'locality'     => $municipality,
                 'postalCode'   => $postalCode,
+                'adminLevels'  => $this->getAdminLevels($feature->properties),
             ]);
         }
 
@@ -194,5 +196,37 @@ final class Addok extends AbstractHttpProvider implements Provider
         }
 
         return $json;
+    }
+
+    /**
+     * @param \stdClass $properties
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function getAdminLevels(\stdClass $properties): array
+    {
+        $adminLevels = [];
+
+        $context = !empty($properties->context) ? $properties->context : null;
+        if ($context) {
+            $contextParts = explode(',', $context);
+            $departmentCode   = trim($contextParts[0] ?? '');
+            $departementLabel = trim($contextParts[1] ?? '');
+            $regionLabel      = trim($contextParts[2] ?? '');
+
+            $adminLevels[] = ['level' => 2, 'name' => $regionLabel];
+            $adminLevels[] = ['level' => 3, 'name' => $departementLabel, 'code' => $departmentCode];
+        }
+
+        $cityCode = !empty($properties->citycode) ? $properties->citycode : null;
+        $municipality = !empty($properties->city) ? $properties->city : null;
+        if ($cityCode && $municipality) {
+            $adminLevels[] = ['level' => 4, 'name' => $municipality, 'code' => $cityCode];
+        }
+
+        $district = !empty($properties->district) ? $properties->district : null;
+        $adminLevels[] = ['level' => 5, 'name' => $district];
+
+        return $adminLevels;
     }
 }
