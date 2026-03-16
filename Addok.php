@@ -210,9 +210,9 @@ final class Addok extends AbstractHttpProvider implements Provider
         $context = !empty($properties->context) ? $properties->context : null;
         if ($context) {
             $contextParts = explode(',', $context);
-            $departmentCode   = trim($contextParts[0] ?? '');
+            $departmentCode = trim($contextParts[0] ?? '');
             $departementLabel = trim($contextParts[1] ?? '');
-            $regionLabel      = trim($contextParts[2] ?? '');
+            $regionLabel = trim($contextParts[2] ?? '');
 
             $adminLevels[] = ['level' => 2, 'name' => $regionLabel];
             $adminLevels[] = ['level' => 3, 'name' => $departementLabel, 'code' => $departmentCode];
