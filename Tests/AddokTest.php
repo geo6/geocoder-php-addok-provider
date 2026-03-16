@@ -65,6 +65,12 @@ class AddokTest extends BaseTestCase
         $this->assertEquals('Quai de la Tourelle', $result->getStreetName());
         $this->assertEquals('95000', $result->getPostalCode());
         $this->assertEquals('Cergy', $result->getLocality());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Val-d\'Oise', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('95', $result->getAdminLevels()->get(3)->getCode());
+        $this->assertEquals('Cergy', $result->getAdminLevels()->get(4)->getName());
+        $this->assertEquals('95127', $result->getAdminLevels()->get(4)->getCode());
     }
 
     public function testGeocodeQuery()
@@ -84,6 +90,12 @@ class AddokTest extends BaseTestCase
         $this->assertEquals('Quai de la Tourelle', $result->getStreetName());
         $this->assertEquals('95000', $result->getPostalCode());
         $this->assertEquals('Cergy', $result->getLocality());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Val-d\'Oise', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('95', $result->getAdminLevels()->get(3)->getCode());
+        $this->assertEquals('Cergy', $result->getAdminLevels()->get(4)->getName());
+        $this->assertEquals('95127', $result->getAdminLevels()->get(4)->getCode());
     }
 
     public function testGeocodeOnlyCityQuery()
@@ -102,6 +114,12 @@ class AddokTest extends BaseTestCase
         $this->assertNull($result->getStreetName());
         $this->assertEquals('38000', $result->getPostalCode());
         $this->assertEquals('Grenoble', $result->getLocality());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('Auvergne-Rhône-Alpes', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Isère', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('38', $result->getAdminLevels()->get(3)->getCode());
+        $this->assertEquals('Grenoble', $result->getAdminLevels()->get(4)->getName());
+        $this->assertEquals('38185', $result->getAdminLevels()->get(4)->getCode());
     }
 
     public function testGeocodeHouseNumberTypeQuery()
@@ -120,6 +138,13 @@ class AddokTest extends BaseTestCase
         $this->assertEquals('Avenue Kléber', $result->getStreetName());
         $this->assertEquals('75016', $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
+        $this->assertCount(4, $result->getAdminLevels());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('75', $result->getAdminLevels()->get(3)->getCode());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(4)->getName());
+        $this->assertEquals('75116', $result->getAdminLevels()->get(4)->getCode());
+        $this->assertEquals('Paris 16e Arrondissement', $result->getAdminLevels()->get(5)->getName());
     }
 
     public function testGeocodeStreetTypeQuery()
@@ -138,6 +163,13 @@ class AddokTest extends BaseTestCase
         $this->assertEquals('Avenue Kléber', $result->getStreetName());
         $this->assertEquals('75016', $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
+        $this->assertCount(4, $result->getAdminLevels());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('75', $result->getAdminLevels()->get(3)->getCode());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(4)->getName());
+        $this->assertEquals('75116', $result->getAdminLevels()->get(4)->getCode());
+        $this->assertEquals('Paris 16e Arrondissement', $result->getAdminLevels()->get(5)->getName());
     }
 
     public function testGeocodeLocalityQuery()
